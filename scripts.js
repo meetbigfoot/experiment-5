@@ -45,7 +45,7 @@ const enrichPosition = (c) => {
 const getVenues = (c) => {
   history.push({
     role: 'user',
-    content: `Please tell me three closest event venues and their distances in miles from the following coordinates: ${c}.`,
+    content: `Please tell me three closest smaller venues like outdoor amphitheaters, music halls, and theaters and their distances in miles from the following coordinates: ${c}.`,
   })
   heyI(history).then((text) => {
     history.push({
@@ -70,6 +70,7 @@ const makeDay = () => {
     g('schedule').textContent = text
     getMarkers(text)
     getDetails(text)
+    getReviews(text)
   })
 }
 
@@ -105,6 +106,24 @@ const getDetails = () => {
       content: text,
     })
     g('details').textContent = text
+    console.log(history)
+  })
+}
+
+const getReviews = () => {
+  heyI([
+    ...history,
+    {
+      role: 'user',
+      content:
+        'For each of these places, please provide a few ratings and reviews from popular and trusted sources.',
+    },
+  ]).then((text) => {
+    history.push({
+      role: 'assistant',
+      content: text,
+    })
+    g('reviews').textContent = text
     console.log(history)
   })
 }
