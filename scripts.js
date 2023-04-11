@@ -53,11 +53,11 @@ const getVenues = (c) => {
       content: text,
     })
     g('venue').textContent = text
-    makeDay(c)
+    makeDay()
   })
 }
 
-const makeDay = (c) => {
+const makeDay = () => {
   history.push({
     role: 'user',
     content: `Ok, pick one of those three venues for me and plan a simple schedule for me with 2–4 other family-friendly restaurants or things to do near that venue.`,
@@ -68,9 +68,48 @@ const makeDay = (c) => {
       content: text,
     })
     g('schedule').textContent = text
+    getMarkers(text)
+    getDetails(text)
+  })
+}
+
+const getMarkers = () => {
+  heyI([
+    ...history,
+    {
+      role: 'user',
+      content:
+        'For each of these places, please provide the address, latitude, and longitude in JSON format.',
+    },
+  ]).then((text) => {
+    history.push({
+      role: 'assistant',
+      content: text,
+    })
+    g('markers').textContent = text
     console.log(history)
   })
 }
+
+const getDetails = () => {
+  heyI([
+    ...history,
+    {
+      role: 'user',
+      content:
+        'For each of these places, please provide details on hours, pricing, good for, best time to go, and parking.',
+    },
+  ]).then((text) => {
+    history.push({
+      role: 'assistant',
+      content: text,
+    })
+    g('details').textContent = text
+    console.log(history)
+  })
+}
+
+// the old prototype stuff follows
 
 const data = [
   {
