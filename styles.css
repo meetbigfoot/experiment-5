@@ -75,8 +75,15 @@ body {
   text-transform: uppercase;
 }
 
+/* new content */
+
 .loading {
   width: 40px;
+}
+
+#map1 {
+  height: 200px;
+  width: 200px;
 }
 
 .iphone-14 {

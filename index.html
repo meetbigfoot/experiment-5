@@ -12,12 +12,21 @@
   <body>
     <h1>Bigfoot GPT Experiment #5</h1>
     <p>GPT! What is it good for? Absolutely <s>nothing</s> everything.</p>
+    <select id="model" onchange="changeModel()">
+      <option value="turbo">Faster gpt-3.5-turbo</option>
+      <option value="gpt4">More accurate gpt-4 (broken)</option>
+    </select>
     <h2>What does it know about where I am?</h2>
     <p id="position">
       <img class="loading" />
       GPT location…
     </p>
     <div id="map1"></div>
+    <h2>What does it know about when I am?</h2>
+    <p id="times">
+      <img class="loading" />
+      GPT times…
+    </p>
     <h2>Can it find the closest performance venue?</h2>
     <p id="venue">
       <img class="loading" />
@@ -74,6 +83,6 @@
     </div>
     <h2>Can it personalize all of this content?</h2>
     <h2>Can it do this again for tomorrow?</h2>
-    <button onClick="location.reload()">Do it again!</button>
+    <button onclick="location.reload()">Do it again!</button>
   </body>
 </html>

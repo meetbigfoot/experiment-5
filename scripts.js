@@ -1,7 +1,8 @@
+let coords = [-118.46, 34]
 let history = [
   {
     role: 'system',
-    content: 'You are a friendly, light-hearted local guide telling me about what is around me.',
+    content: `You are a friendly, light-hearted local guide telling me about what is around me and the current time is ${Date.now()}.`,
   },
 ]
 
@@ -12,8 +13,12 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibWF0dGJvcm4iLCJhIjoiY2w1Ym0wbHZwMDh3eTNlbnh1a
 
 loadingGif = 'https://res.cloudinary.com/bigfoot-cdn/image/upload/v1681246901/demo/liquid-geometry-loader_yjymcn.gif'
 
+const models = ['turbo', 'gpt4']
+
+const changeModel = () => enrichPosition(coords)
+
 const heyI = async messages => {
-  const response = await fetch('https://us-central1-samantha-374622.cloudfunctions.net/turbo', {
+  const response = await fetch(`https://us-central1-samantha-374622.cloudfunctions.net/${g('model').value}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -36,7 +41,7 @@ const tikapi = async query => {
 const enrichPosition = c => {
   history.push({
     role: 'user',
-    content: `Please tell me the state, city, local area or neighborhood name, and approximate address for the following coordinates: ${c}.`,
+    content: `Please tell me the state, city, local area or neighborhood name, and approximate address for these coordinates: ${c}.`,
   })
   heyI(history).then(text => {
     history.push({
@@ -44,7 +49,25 @@ const enrichPosition = c => {
       content: text,
     })
     g('position').textContent = text
+    getTimes(c)
     getVenues(c)
+  })
+}
+
+const getTimes = c => {
+  heyI([
+    ...history,
+    {
+      role: 'user',
+      content: `Get day of the week and human-friendly and machine-readable start of day and end of day times that make sense when planning activities for today (the year is 2023 and the current time is ${Date.now()}), tomorrow, and this weekend for my current timezone using these coordinates: ${c}.`,
+    },
+  ]).then(text => {
+    // history.push({
+    //   role: 'assistant',
+    //   content: text,
+    // })
+    g('times').textContent = text
+    // console.log(history)
   })
 }
 
@@ -159,9 +182,9 @@ const renderMap = () => {
   })
   map.addControl(new mapboxgl.NavigationControl())
   const marker1 = new mapboxgl.Marker().setLngLat(coords).addTo(map)
-  data.forEach(item => {
-    const marker = new mapboxgl.Marker().setLngLat([item.longitude, item.latitude]).addTo(map)
-  })
+  // data.forEach(item => {
+  //   const marker = new mapboxgl.Marker().setLngLat([item.longitude, item.latitude]).addTo(map)
+  // })
 }
 
 const renderReel = () => {}
@@ -176,8 +199,6 @@ const data = [
     longitude: -87.920495,
   },
 ]
-
-let coords = [-87.9, 43.04]
 
 navigator.geolocation.getCurrentPosition(
   p => {
