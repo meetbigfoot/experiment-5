@@ -77,6 +77,15 @@ body {
 
 /* new content */
 
+#multiverse {
+  align-items: baseline;
+  display: flex;
+}
+#multiverse > div {
+  font-size: 1.5rem;
+  margin: 0 4px;
+}
+
 .loading {
   width: 40px;
 }

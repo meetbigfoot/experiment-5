@@ -18,6 +18,7 @@ const models = ['turbo', 'gpt4']
 const changeModel = () => enrichPosition(coords)
 
 const heyI = async messages => {
+  g('prompts').textContent = parseInt(g('prompts').textContent) + 1
   const response = await fetch(`https://us-central1-samantha-374622.cloudfunctions.net/${g('model').value}`, {
     method: 'POST',
     headers: {
@@ -51,6 +52,7 @@ const enrichPosition = c => {
     g('position').textContent = text
     getTimes(c)
     getVenues(c)
+    g('threads').textContent = parseInt(g('threads').textContent) + 2
   })
 }
 
@@ -59,7 +61,7 @@ const getTimes = c => {
     ...history,
     {
       role: 'user',
-      content: `Get day of the week and human-friendly and machine-readable start of day and end of day times that make sense when planning activities for today (the year is 2023 and the current time is ${Date.now()}), tomorrow, and this weekend for my current timezone using these coordinates: ${c}.`,
+      content: `My current time is ${dayjs().format()}. For today, tomorrow, and this weekend, tell me how many hours away from the start of the day I am, a machine-readable version of the start of the day, and the ideal window when planning activities in the current season for my timezone.`,
     },
   ]).then(text => {
     // history.push({
@@ -69,6 +71,7 @@ const getTimes = c => {
     g('times').textContent = text
     // console.log(history)
   })
+  g('dpoints').textContent = parseInt(g('dpoints').textContent) + 12
 }
 
 const getVenues = c => {
@@ -84,6 +87,7 @@ const getVenues = c => {
     g('venue').textContent = text
     makeDay()
   })
+  g('dpoints').textContent = parseInt(g('dpoints').textContent) + 6
 }
 
 const makeDay = () => {
@@ -97,10 +101,12 @@ const makeDay = () => {
       content: text,
     })
     g('schedule').textContent = text
+    g('dpoints').textContent = parseInt(g('dpoints').textContent) + 6
     getMarkers(text)
     getDetails(text)
     getReviews(text)
     getTikToks(text)
+    g('threads').textContent = parseInt(g('threads').textContent) + 4
   })
 }
 
@@ -117,6 +123,7 @@ const getMarkers = () => {
       content: text,
     })
     g('markers').textContent = text
+    g('dpoints').textContent = parseInt(g('dpoints').textContent) + 18
     console.log(history)
   })
 }
@@ -135,6 +142,7 @@ const getDetails = () => {
       content: text,
     })
     g('details').textContent = text
+    g('dpoints').textContent = parseInt(g('dpoints').textContent) + 36
     console.log(history)
   })
 }
@@ -152,6 +160,7 @@ const getReviews = () => {
       content: text,
     })
     g('reviews').textContent = text
+    g('dpoints').textContent = parseInt(g('dpoints').textContent) + 18
     console.log(history)
   })
 }
@@ -165,6 +174,7 @@ const getTikToks = () => {
       div.innerText = item.video.playAddr
       g('videos').appendChild(div)
     })
+    g('dpoints').textContent = parseInt(g('dpoints').textContent) + 10
   })
 }
 
