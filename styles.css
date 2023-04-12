@@ -90,11 +90,13 @@ body {
   width: 390px;
 }
 
-#videos {
+#videos,
+#reel {
   display: flex;
   gap: 1rem;
   overflow-y: auto;
 }
-#videos > div {
+#videos > div,
+#reel > div {
   flex: 1 0 390px;
 }

@@ -4,15 +4,9 @@
     <title>Bigfoot GPT Experiment #5</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <link
-      rel="stylesheet"
-      href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css"
-    />
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" />
     <link rel="stylesheet" href="styles.css" />
-    <script
-      defer
-      src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"
-    ></script>
+    <script defer src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
     <script defer src="scripts.js"></script>
   </head>
   <body>
@@ -20,63 +14,65 @@
     <p>GPT! What is it good for? Absolutely <s>nothing</s> everything.</p>
     <h2>What does it know about where I am?</h2>
     <p id="position">
-      <img
-        class="loading"
-        src="https://res.cloudinary.com/bigfoot-cdn/image/upload/v1681246901/demo/liquid-geometry-loader_yjymcn.gif"
-      />
+      <img class="loading" />
       GPT location…
     </p>
     <div id="map1"></div>
     <h2>Can it find the closest performance venue?</h2>
     <p id="venue">
-      <img
-        class="loading"
-        src="https://res.cloudinary.com/bigfoot-cdn/image/upload/v1681246901/demo/liquid-geometry-loader_yjymcn.gif"
-      />
+      <img class="loading" />
       GPT venues…
     </p>
     <h2>Can it plan more things to do nearby?</h2>
     <p id="schedule">
-      <img
-        class="loading"
-        src="https://res.cloudinary.com/bigfoot-cdn/image/upload/v1681246901/demo/liquid-geometry-loader_yjymcn.gif"
-      />
+      <img class="loading" />
       GPT schedule…
     </p>
     <h2>Can it generate pins on a map?</h2>
     <p id="markers">
-      <img
-        class="loading"
-        src="https://res.cloudinary.com/bigfoot-cdn/image/upload/v1681246901/demo/liquid-geometry-loader_yjymcn.gif"
-      />
+      <img class="loading" />
       GPT markers…
     </p>
     <h2>Can it add details?</h2>
     <p id="details">
-      <img
-        class="loading"
-        src="https://res.cloudinary.com/bigfoot-cdn/image/upload/v1681246901/demo/liquid-geometry-loader_yjymcn.gif"
-      />
+      <img class="loading" />
       GPT hours, pricing, good for, best time to go, parking…
     </p>
     <h2>How about ratings and reviews?</h2>
     <p id="reviews">
-      <img
-        class="loading"
-        src="https://res.cloudinary.com/bigfoot-cdn/image/upload/v1681246901/demo/liquid-geometry-loader_yjymcn.gif"
-      />
+      <img class="loading" />
       GPT ratings and reviews…
     </p>
     <h2>Can it add images?</h2>
+    <p>
+      No, but we can try a few things instead: having it search Google Images, pick a stock image, or generate AI images
+      for us.
+    </p>
     <h2>Can it add videos?</h2>
     <div id="videos">
-      <img
-        class="loading"
-        src="https://res.cloudinary.com/bigfoot-cdn/image/upload/v1681246901/demo/liquid-geometry-loader_yjymcn.gif"
-      />
+      <img class="loading" />
       GPT videos…
     </div>
     <h2>Can it make a reel that’s easy to share?</h2>
+    <div id="reel">
+      <div class="iphone-14" id="cover">
+        <div class="cover-small">Our day</div>
+        <h1 class="cover-title">GPT-named Headline for this set</h1>
+        <div class="cover-date">today’s date</div>
+        <div class="cover-prompt">prompt</div>
+        <div class="cover-acts">
+          <div class="cover-act cover-act-1">list day</div>
+          <div class="cover-act cover-act-2">location-dot map</div>
+          <div class="cover-act cover-act-3">play reel</div>
+        </div>
+        <div class="cover-brand">Bigfoot</div>
+      </div>
+      <div class="iphone-14" id="cover">[agenda view goes here]</div>
+      <div class="iphone-14" id="cover">[map view goes here]</div>
+      <div class="iphone-14" id="cover">[reel starts here]</div>
+      <div id="download">Download</div>
+    </div>
+    <h2>Can it personalize all of this content?</h2>
     <h2>Can it do this again for tomorrow?</h2>
     <button onClick="location.reload()">Do it again!</button>
   </body>
