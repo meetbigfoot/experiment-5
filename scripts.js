@@ -2,7 +2,7 @@ let coords = [-118.46, 34]
 let history = [
   {
     role: 'system',
-    content: `You are a friendly, light-hearted local guide telling me about what is around me and the current time is ${Date.now()}.`,
+    content: `You are a friendly local guide telling me about what is around me and I want you to give short, quick responses to all of my questions.`,
   },
 ]
 
