@@ -25,6 +25,17 @@ const heyI = async (messages) => {
   return response.text()
 }
 
+const tikapi = async (query) => {
+  const response = await fetch(
+    'https://us-central1-samantha-374622.cloudfunctions.net/tiktok',
+    {
+      method: 'POST',
+      body: query,
+    },
+  )
+  return response.text()
+}
+
 // ok we are going to do a bunch of things in series
 
 const enrichPosition = (c) => {
@@ -60,7 +71,7 @@ const getVenues = (c) => {
 const makeDay = () => {
   history.push({
     role: 'user',
-    content: `Ok, pick one of those three venues for me and plan a simple schedule for me with 2–4 other family-friendly restaurants or things to do near that venue.`,
+    content: `Ok, pick one of those three venues for me and plan a full day—morning, noon, afternoon, and evening—for me with 2–4 other family-friendly restaurants or things to do near that venue.`,
   })
   heyI(history).then((text) => {
     history.push({
@@ -71,6 +82,7 @@ const makeDay = () => {
     getMarkers(text)
     getDetails(text)
     getReviews(text)
+    getTikToks(text)
   })
 }
 
@@ -125,6 +137,18 @@ const getReviews = () => {
     })
     g('reviews').textContent = text
     console.log(history)
+  })
+}
+
+const getTikToks = () => {
+  tikapi('lower east side').then((obj) => {
+    g('videos').innerHTML = ''
+    JSON.parse(obj).item_list.forEach((item) => {
+      const div = document.createElement('div')
+      div.className = 'iphone-14 tiktok'
+      div.innerText = item.video.playAddr
+      g('videos').appendChild(div)
+    })
   })
 }
 

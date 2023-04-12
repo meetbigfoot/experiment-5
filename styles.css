@@ -78,3 +78,23 @@ body {
 .loading {
   width: 40px;
 }
+
+.iphone-14 {
+  background: black;
+  border-radius: 3rem;
+  color: white;
+  height: 844px;
+  overflow: hidden;
+  padding: 2rem;
+  word-wrap: break-word;
+  width: 390px;
+}
+
+#videos {
+  display: flex;
+  gap: 1rem;
+  overflow-y: auto;
+}
+#videos > div {
+  flex: 1 0 390px;
+}
