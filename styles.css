@@ -90,9 +90,10 @@ body {
   width: 40px;
 }
 
-#map1 {
-  height: 200px;
-  width: 200px;
+#map1,
+#map2 {
+  height: 375px;
+  width: 375px;
 }
 
 .iphone-14 {

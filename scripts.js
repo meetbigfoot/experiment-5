@@ -1,4 +1,27 @@
 let coords = [-118.46, 34]
+let data = {
+  cover: {
+    date: 'April 13, 2023',
+    prompt: 'Example',
+    title: 'Example',
+  },
+  places: [
+    {
+      address: 'Example',
+      area: 'Example',
+      distance: '0.9 miles',
+      name: 'Example',
+      latitude: 12.34,
+      longitude: -56.78,
+    },
+  ],
+  plan: [
+    { when: 'morning', property2: 'example' },
+    { when: 'noon', property2: 'example' },
+    { when: 'afternoon', property2: 'example' },
+    { when: 'evening', property2: 'example' },
+  ],
+}
 let history = [
   {
     role: 'system',
@@ -106,8 +129,27 @@ const makeDay = () => {
     getDetails(text)
     getReviews(text)
     getTikToks(text)
+    getCoverJSON()
+    getPlanJSON()
     g('threads').textContent = parseInt(g('threads').textContent) + 4
   })
+}
+
+const toJSON = str => {
+  const curly = str.indexOf('{')
+  const square = str.indexOf('[')
+  let first
+  if (curly < 0) first = '[' // only for empty arrays
+  else if (square < 0) first = '{'
+  else first = curly < square ? '{' : '['
+  const last = first === '{' ? '}' : ']'
+  // ensure JSON is complete
+  let count = 0
+  for (c of str) {
+    if (c === '{' || c === '[') count++
+    else if (c === '}' || c === ']') count--
+  }
+  if (!count) return JSON.parse(str.slice(str.indexOf(first), str.lastIndexOf(last) + 1))
 }
 
 const getMarkers = () => {
@@ -115,7 +157,9 @@ const getMarkers = () => {
     ...history,
     {
       role: 'user',
-      content: 'For each of these places, please provide the address, latitude, and longitude in JSON format.',
+      content: `Now return only a JSON array containing objects for each of these places following this schema: ${JSON.stringify(
+        data.places,
+      )}`,
     },
   ]).then(text => {
     history.push({
@@ -123,8 +167,24 @@ const getMarkers = () => {
       content: text,
     })
     g('markers').textContent = text
-    g('dpoints').textContent = parseInt(g('dpoints').textContent) + 18
+    const arr = toJSON(text)
+    renderMap2(arr)
+    g('dpoints').textContent = parseInt(g('dpoints').textContent) + arr.length * Object.keys(arr[0]).length
     console.log(history)
+  })
+}
+
+const renderMap2 = arr => {
+  const map = new mapboxgl.Map({
+    center: coords,
+    container: 'map2',
+    style: 'mapbox://styles/mapbox/streets-v12',
+    zoom: 9,
+  })
+  map.addControl(new mapboxgl.NavigationControl())
+  const marker1 = new mapboxgl.Marker().setLngLat(coords).addTo(map)
+  arr.forEach(item => {
+    const marker = new mapboxgl.Marker().setLngLat([item.longitude, item.latitude]).addTo(map)
   })
 }
 
@@ -178,9 +238,41 @@ const getTikToks = () => {
   })
 }
 
-const renderCover = () => {}
+const getCoverJSON = () => {
+  heyI([
+    ...history,
+    {
+      role: 'user',
+      content: `Now return only a JSON array containing objects for a cover page that includes today’ date (${dayjs().format()}), a creative title, and a very short summary of the prompt used to generate all this following this schema: ${JSON.stringify(
+        data.cover,
+      )}`,
+    },
+  ]).then(text => {
+    renderCover(toJSON(text))
+  })
+}
 
-const renderPlan = () => {}
+const renderCover = data => {
+  console.log('Cover JSON:', data)
+}
+
+const getPlanJSON = () => {
+  heyI([
+    ...history,
+    {
+      role: 'user',
+      content: `Now return only a JSON array containing objects for the schedule following this schema: ${JSON.stringify(
+        data.plan,
+      )}`,
+    },
+  ]).then(text => {
+    renderPlan(toJSON(text))
+  })
+}
+
+const renderPlan = data => {
+  console.log('Plan JSON:', data)
+}
 
 const renderMap = () => {
   enrichPosition(coords)
@@ -200,15 +292,6 @@ const renderMap = () => {
 const renderReel = () => {}
 
 // the old prototype stuff follows
-
-const data = [
-  {
-    name: 'Milwaukee Public Museum',
-    image: 'https://www.milwaukeemag.com/wp-content/uploads/2022/07/05-Commons_05-scaled.jpg',
-    latitude: 43.040613,
-    longitude: -87.920495,
-  },
-]
 
 navigator.geolocation.getCurrentPosition(
   p => {
