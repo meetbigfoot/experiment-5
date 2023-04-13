@@ -1,4 +1,4 @@
-let coords = [-118.46, 34]
+let coords = [-118.4695, 33.985]
 let data = {
   cover: {
     date: 'April 13, 2023',
