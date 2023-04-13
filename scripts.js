@@ -15,12 +15,7 @@ let data = {
       longitude: -56.78,
     },
   ],
-  plan: [
-    { when: 'morning', property2: 'example' },
-    { when: 'noon', property2: 'example' },
-    { when: 'afternoon', property2: 'example' },
-    { when: 'evening', property2: 'example' },
-  ],
+  plan: [{ when: 'morning', place: 'example', about: 'example' }],
 }
 let history = [
   {
@@ -116,7 +111,7 @@ const getVenues = c => {
 const makeDay = () => {
   history.push({
     role: 'user',
-    content: `Ok, pick one of those three venues for me and plan a full day—morning, noon, afternoon, and evening—for me with 2–4 other family-friendly restaurants or things to do near that venue.`,
+    content: `Ok, pick one of those three venues for me and plan a full day—morning, noon, afternoon, and evening—for me with 2–4 other good restaurants or things to do near that venue—both popular and unpopular but good.`,
   })
   heyI(history).then(text => {
     history.push({
@@ -128,7 +123,7 @@ const makeDay = () => {
     getMarkers(text)
     getDetails(text)
     getReviews(text)
-    getTikToks(text)
+    // getTikToks(text)
     getCoverJSON()
     getPlanJSON()
     g('threads').textContent = parseInt(g('threads').textContent) + 4
@@ -243,7 +238,7 @@ const getCoverJSON = () => {
     ...history,
     {
       role: 'user',
-      content: `Now return only a JSON array containing objects for a cover page that includes today’ date (${dayjs().format()}), a creative title, and a very short summary of the prompt used to generate all this following this schema: ${JSON.stringify(
+      content: `Now return only a JSON object for a cover page that includes today’s date (${dayjs().format()}), a creative title, and a very short summary of the prompt used to generate all this (like what a human would type informally into a chat) following this schema: ${JSON.stringify(
         data.cover,
       )}`,
     },
@@ -253,7 +248,9 @@ const getCoverJSON = () => {
 }
 
 const renderCover = data => {
-  console.log('Cover JSON:', data)
+  g('title').textContent = data.title
+  g('date').textContent = data.date
+  g('prompt').textContent = data.prompt
 }
 
 const getPlanJSON = () => {
@@ -272,6 +269,27 @@ const getPlanJSON = () => {
 
 const renderPlan = data => {
   console.log('Plan JSON:', data)
+  g('plan').textContent = ''
+  data.forEach(part => {
+    const group = document.createElement('div')
+    group.className = 'plan-group'
+    const when = document.createElement('div')
+    when.className = 'plan-when'
+    when.textContent = part.when
+    group.appendChild(when)
+    const stack = document.createElement('div')
+    stack.className = 'plan-stack'
+    const place = document.createElement('h2')
+    place.className = 'plan-place'
+    place.textContent = part.place
+    stack.appendChild(place)
+    const about = document.createElement('div')
+    about.className = 'plan-about'
+    about.textContent = part.about
+    stack.appendChild(about)
+    group.appendChild(stack)
+    g('plan').appendChild(group)
+  })
 }
 
 const renderMap = () => {

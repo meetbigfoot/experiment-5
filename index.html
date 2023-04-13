@@ -6,20 +6,16 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.css" />
     <link rel="stylesheet" href="styles.css" />
+    <script defer crossorigin="anonymous" src="https://kit.fontawesome.com/0bef9420dc.js"></script>
     <script defer src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
     <script defer src="https://unpkg.com/dayjs/dayjs.min.js"></script>
     <script defer src="scripts.js"></script>
   </head>
   <body>
-    <div>Tech demo (behind the scenes)</div>
-    <h1>Bigfoot GPT Experiment #5</h1>
+    <div class="small">Tech demo (behind the scenes)</div>
+    <h1>Experiment #5</h1>
     <p>GPT! What is it good for? Absolutely <s>nothing</s> everything.</p>
-    <select id="model" onchange="changeModel()">
-      <option value="turbo">Faster gpt-3.5-turbo</option>
-      <option value="gpt4">More accurate gpt-4 (broken)</option>
-    </select>
     <div id="multiverse" title="The Conversational AI Multiverse™">
-      Stats ·
       <div id="prompts">0</div>
       prompts ·
       <div id="threads">0</div>
@@ -27,6 +23,10 @@
       <div id="dpoints">0</div>
       data points
     </div>
+    <select id="model" onchange="changeModel()">
+      <option value="turbo">Faster gpt-3.5-turbo</option>
+      <option value="gpt4">More accurate gpt-4 (broken)</option>
+    </select>
     <h2>What does it know about where I am?</h2>
     <p id="position">
       <img class="loading" />
@@ -72,28 +72,41 @@
     <h2>Can it add videos?</h2>
     <div id="videos">
       <img class="loading" />
-      GPT videos…
+      TikAPI videos…
     </div>
-    <h2>Can it make a reel that’s easy to share?</h2>
-    <div id="reel">
+    <h2>Can it make a collection that’s easy to share?</h2>
+    <div id="demo">
       <div class="iphone-14" id="cover">
-        <div class="cover-small">Our day</div>
-        <h1 class="cover-title">GPT-named Headline for this set</h1>
-        <div class="cover-date">today’s date</div>
-        <div class="cover-prompt">prompt</div>
+        <div class="small cover-small">Our day</div>
+        <h1 class="cover-title" id="title">Wait for it…</h1>
+        <div class="cover-date" id="date">2023</div>
+        <div class="cover-prompt" id="prompt">your prompt</div>
         <div class="cover-acts">
-          <div class="cover-act cover-act-1">list day</div>
-          <div class="cover-act cover-act-2">location-dot map</div>
-          <div class="cover-act cover-act-3">play reel</div>
+          <div class="cover-act cover-act-1"><i class="fa-solid fa-list"></i> Day</div>
+          <div class="cover-act cover-act-2"><i class="fa-solid fa-location-dot"></i> Map</div>
+          <div class="cover-act cover-act-3"><i class="fa-solid fa-play"></i> Reel</div>
         </div>
-        <div class="cover-brand">Bigfoot</div>
+        <div class="cover-brand"><small>made with</small> Bigfoot®</div>
       </div>
-      <div class="iphone-14" id="cover">[agenda view goes here]</div>
-      <div class="iphone-14" id="cover">[map view goes here]</div>
-      <div class="iphone-14" id="cover">[reel starts here]</div>
+      <div class="iphone-14" id="agenda">
+        <div id="plan">
+          <img class="loading" />
+        </div>
+        <iframe src="https://player.vimeo.com/video/531147114?autoplay=1&byline=0&loop=1&muted=true"></iframe>
+        <div class="filter"></div>
+      </div>
+      <div class="iphone-14" id="map">
+        <div class="cover-act cover-act-2"><i class="fa-solid fa-location-dot"></i> Map</div>
+        GPT map…
+      </div>
+      <div class="iphone-14" id="reel">
+        <div class="cover-act cover-act-3"><i class="fa-solid fa-play"></i> Reel</div>
+        GPT reel…
+      </div>
       <div id="download">Download</div>
     </div>
     <h2>Can it personalize all of this content?</h2>
+    <p>Stay tuned…</p>
     <h2>Can it do this again for tomorrow?</h2>
     <button onclick="location.reload()">Do it again!</button>
   </body>
